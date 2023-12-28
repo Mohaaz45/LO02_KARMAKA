@@ -49,7 +49,4 @@ public class Player {
         this.pile = new ArrayList<Card>();
     }
 
-    public void AjouterCarteMain(){
-
-    }
 }
