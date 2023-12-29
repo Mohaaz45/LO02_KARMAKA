@@ -1,5 +1,6 @@
 package fr.lo02.karmaka.game.models;
 
+import fr.lo02.karmaka.game.GameManager;
 import fr.lo02.karmaka.game.models.cards.Cards;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ public class Player {
     private String niveau;
     private List<Cards> main;
     private List<Cards> pile;
+    private List<Cards> vieFuture;
+    private List<Cards> oeuvres;
+    private int anneauxJoueur;
 
     public String getNom() {
         return this.nom;
@@ -46,12 +50,28 @@ public class Player {
     public Player(String nom, String niveau){
         this.nom = nom;
         this.niveau = niveau;
-        this.main = new ArrayList<Card>();
-        this.pile = new ArrayList<Card>();
+       // this.main = new ArrayList<Cards>();
+        // this.pile = new ArrayList<Cards>();
+        this.main.addAll(PlateauDeJeu.source.subList(0, 5));
+        this.pile.addAll(PlateauDeJeu.source.subList(0, 2));
     }
 
-    public void constituerMain(){
+    public Cards piocherCarte(List<Cards> pileDeCarte){
 
     }
+    public void poserCarte(Cards card, List<Cards> pileDeCarte){
+
+    }
+
+    public void jouerFutur(Cards card){
+        this.vieFuture.add(card);
+    }
+    public void jouerPoints(){
+
+    }
+    public void jouerOeuvres(){
+
+    }
+
 
 }
