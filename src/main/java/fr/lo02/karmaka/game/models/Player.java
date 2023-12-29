@@ -1,14 +1,15 @@
 package fr.lo02.karmaka.game.models;
 
-import fr.lo02.karmaka.game.models.cards.Card;
+import fr.lo02.karmaka.game.models.cards.Cards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private String nom;
     private String niveau;
-    private ArrayList<Card> main;
-    private ArrayList<Card> pile;
+    private List<Cards> main;
+    private List<Cards> pile;
 
     public String getNom() {
         return this.nom;
@@ -47,6 +48,10 @@ public class Player {
         this.niveau = niveau;
         this.main = new ArrayList<Card>();
         this.pile = new ArrayList<Card>();
+    }
+
+    public void constituerMain(){
+
     }
 
 }
