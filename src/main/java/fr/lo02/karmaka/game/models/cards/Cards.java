@@ -6,28 +6,40 @@ import fr.lo02.karmaka.game.models.Player;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public enum Cards {
 
     TRANSMIGRATION(3, 1, Color.BLUE,
-            List.of("Placez dans votre Main n’importe quelle carte de votre Vie Future.\n")) {
+            List.of("Placez dans votre Main n’importe quelle carte de votre Vie Future.\n"),
+            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte de votre vieFuture.\n")) {
         @Override
-        public void onPlayed(GameManager gameManager , Player player, Player rival) {
-
+        public void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte) {
+            player.getVieFuture();
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Choisissez l'index de la carte à ajouter à votre main : ");
+            int indexCarteChoisie = scanner.nextInt();
+            scanner.close();
+            player.main.add(player.vieFuture.get(indexCarteChoisie));
         }
 
     },
     COUP_DOEIL(3, 1,Color.BLUE,
-            Arrays.asList("Regardez la Main d’un rival.", "Vous pouvez ensuite jouer une autre carte.\n")) {
+            Arrays.asList("Regardez la Main d’un rival.", "Vous pouvez ensuite jouer une autre carte.\n"),
+            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte que vous souhaitez jouer.\n")) {
         @Override
-        public void onPlayed(GameManager gameManager, Player player, Player rival) {
+        public void onPlayed(GameManager gameManager, Player player, Player rival, Cards carte) {
+            System.out.println(rival.getMain());
+            System.out.println("Comment souhaitez vous utiliser votre carte ? ");
 
         }
     },
     DUPERIE(2, 3, Color.BLUE,
-            List.of("Regardez 3 cartes de la Main d’un rival ; ajoutez-en une à votre Main.\n")) {
+            List.of("Regardez 3 cartes de la Main d’un rival ; ajoutez-en une à votre Main.\n")
+            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte que vous souhaitee ajouter à votre main.\n")) {
         @Override
-        public void onPlayed(GameManager gameManager , Player player, Player rival) {
+        public void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte) {
+
         }
     },
     VOL(2, 3, Color.BLUE,
@@ -119,20 +131,24 @@ public enum Cards {
     private final int number, points;
     private final Color color;
     private final List<String> description;
+    private final List<String> information;
 
 
-    Cards(int number, int points, Color color, List<String> description){
+    Cards(int number, int points, Color color, List<String> description, List<String> information){
         this.number = number;
         this.points = points;
         this.color = color;
         this.description = description;
+        this.information = information;
+
     }
 
     public int getNumber() {return number;}
     public int getPoints() {return points;}
     public List<String> getDescription() {return description;}
     public Color getColor() {return color;}
+    public List<String> getInformation() {return information};
 
-    public abstract void onPlayed(GameManager gameManager , Player player, Player rival);
+    public abstract void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte);
 }
 

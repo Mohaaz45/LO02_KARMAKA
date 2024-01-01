@@ -3,12 +3,11 @@ package fr.lo02.karmaka.game.models;
 import fr.lo02.karmaka.game.models.cards.Cards;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class PlateauDeJeu {
-    private final List<Cards> source = new ArrayList<>();
+    public List<Cards> source = new ArrayList<>();
     private List<Cards> fosse = new ArrayList<>();
     private int anneauxKarmiques;
 
@@ -28,16 +27,16 @@ public class PlateauDeJeu {
         return this.fosse;
     }
 
-    public static void defausserCarte(Cards card){
+    public void defausserCarte(Cards card){
         this.fosse.add(card);
     }
-    public static Cards piocherCarte(){
-        this.source.remove(0);
+   /*public void piocherCarte(){
+        this.source.remove(0);*/
     }
     public void prendreAnneaux(int nbAnneau){
         this.anneauxKarmiques -= nbAnneau;
     }
-    public List<Cards> melangerSource(){
+    public void melangerSource(){
         Collections.shuffle(this.source);
     }
 }

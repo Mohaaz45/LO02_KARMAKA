@@ -79,22 +79,28 @@ public class Player {
         // this.pile = new ArrayList<Cards>();
         this.main.addAll(PlateauDeJeu.source.subList(0, 5));
         this.pile.addAll(PlateauDeJeu.source.subList(0, 2));
+        this.anneauxJoueur = 6;
     }
 
     public void piocherCarte(List<Cards> pileDeCarte){
-        main.add(pileDeCarte.get(0));
+        //main.add(pileDeCarte.get(0));
+        main.addAll(pileDeCarte.subList(0, 1));
+        pileDeCarte.subList(0, 1).clear();
     }
     public void poserCarte(Cards card, List<Cards> pileDeCarte){
         pileDeCarte.add(card);
     }
 
     public void jouerFutur(Cards card){
-        this.vieFuture.add(card);
+        //this.vieFuture.add(card);
+        poserCarte(card, vieFuture);
     }
     public void jouerPoints(Cards card){
-        this.oeuvres.add(card);
+        //this.oeuvres.add(card);
+        poserCarte(card, oeuvres);
     }
     public void jouerPouvoir(Cards card){
+        card.getDescription();
         card.onPlayed();
     }
 
@@ -134,8 +140,9 @@ public class Player {
             main.add(card);
         }
         while ((main.size() + pile.size()) < 6){
-            pile.add(PlateauDeJeu.source(0));
-            PlateauDeJeu.piocherCarte();
+            //pile.add(PlateauDeJeu.source(0));
+            pile.addAll(PlateauDeJeu.source.subList(0, 1));
+            PlateauDeJeu.source.subList(0, 1).clear();
         }
     }
 
