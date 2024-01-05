@@ -11,8 +11,7 @@ import java.util.Scanner;
 public enum Cards {
 
     TRANSMIGRATION(3, 1, Color.BLUE,
-            List.of("Placez dans votre Main n’importe quelle carte de votre Vie Future.\n"),
-            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte de votre vieFuture.\n")) {
+            List.of("Placez dans votre Main n’importe quelle carte de votre Vie Future.\n")) {
         @Override
         public void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte) {
             player.getVieFuture();
@@ -25,8 +24,7 @@ public enum Cards {
 
     },
     COUP_DOEIL(3, 1,Color.BLUE,
-            Arrays.asList("Regardez la Main d’un rival.", "Vous pouvez ensuite jouer une autre carte.\n"),
-            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte que vous souhaitez jouer.\n")) {
+            Arrays.asList("Regardez la Main d’un rival.", "Vous pouvez ensuite jouer une autre carte.\n")) {
         @Override
         public void onPlayed(GameManager gameManager, Player player, Player rival, Cards carte) {
             System.out.println(rival.getMain());
@@ -35,8 +33,7 @@ public enum Cards {
         }
     },
     DUPERIE(2, 3, Color.BLUE,
-            List.of("Regardez 3 cartes de la Main d’un rival ; ajoutez-en une à votre Main.\n")
-            List.of("Les paramètres à entrer sont le nom du game Manager, le nom du joueur 1, le nom du joueur 2, et le nom de la carte que vous souhaitee ajouter à votre main.\n")) {
+            List.of("Regardez 3 cartes de la Main d’un rival ; ajoutez-en une à votre Main.\n")) {
         @Override
         public void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte) {
 
@@ -131,15 +128,14 @@ public enum Cards {
     private final int number, points;
     private final Color color;
     private final List<String> description;
-    private final List<String> information;
 
 
-    Cards(int number, int points, Color color, List<String> description, List<String> information){
+
+    Cards(int number, int points, Color color, List<String> description){
         this.number = number;
         this.points = points;
         this.color = color;
         this.description = description;
-        this.information = information;
 
     }
 
@@ -147,8 +143,8 @@ public enum Cards {
     public int getPoints() {return points;}
     public List<String> getDescription() {return description;}
     public Color getColor() {return color;}
-    public List<String> getInformation() {return information};
 
-    public abstract void onPlayed(GameManager gameManager , Player player, Player rival, Cards carte);
+
+    public abstract void onPlayed(GameManager gameManager , Player player, Player rival);
 }
 

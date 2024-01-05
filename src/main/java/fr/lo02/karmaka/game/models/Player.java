@@ -6,6 +6,7 @@ import fr.lo02.karmaka.game.models.cards.Cards;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player {
     private String nom;
@@ -75,18 +76,30 @@ public class Player {
     public Player(String nom){
         this.nom = nom;
         this.niveau = 0;
-       // this.main = new ArrayList<Cards>();
-        // this.pile = new ArrayList<Cards>();
-        this.main.addAll(PlateauDeJeu.source.subList(0, 5));
-        this.pile.addAll(PlateauDeJeu.source.subList(0, 2));
+        this.main = new ArrayList<>();
+        this.pile = new ArrayList<>();
+        this.vieFuture = new ArrayList<>();
+        this.oeuvres = new ArrayList<>();
         this.anneauxJoueur = 6;
+
     }
 
-    public void piocherCarte(List<Cards> pileDeCarte){
-        //main.add(pileDeCarte.get(0));
-        main.addAll(pileDeCarte.subList(0, 1));
-        pileDeCarte.subList(0, 1).clear();
+
+    public void distribuerCarte(){
+        this.main.addAll(PlateauDeJeu.source.subList(0, 5));
+        this.pile.addAll(PlateauDeJeu.source.subList(0, 2));
     }
+    public String piocherCarte(List<Cards> pileDeCarte) {
+        // Vérifier s'il reste suffisamment de cartes dans la pile
+        if (pileDeCarte.size() >= 1) {
+            main.addAll(pileDeCarte.subList(0, 1));
+            pileDeCarte.subList(0, 1).clear();
+            return "Carte piochée avec succès.";
+        } else {
+            return "La pile de cartes est vide. Impossible de piocher.";
+        }
+    }
+
     public void poserCarte(Cards card, List<Cards> pileDeCarte){
         pileDeCarte.add(card);
     }
@@ -100,31 +113,31 @@ public class Player {
         poserCarte(card, oeuvres);
     }
     public void jouerPouvoir(Cards card){
-        card.getDescription();
         card.onPlayed();
     }
+
 
     public void evolutionKarmique(Color color, int nbAnneaux){
         int pointReincarnation = 0;
         for (Cards card : oeuvres){
-            if (card.getColor() = color){
+            if (card.getColor() == color){
                 pointReincarnation += card.getPoints();
             }
         }
         this.anneauxJoueur -= nbAnneaux;
         pointReincarnation += nbAnneaux;
-        if (pointReincarnation < 4){
+        if (pointReincarnation < 4 || pointReincarnation < this.niveau){
             System.out.println("Dommage, vous n'avez pas assez de points pour évoluer sur l'échelle karmique...");
-        } else if (pointReincarnation == 4) {
+        } else if (pointReincarnation == 4 && pointReincarnation > this.niveau) {
             setNiveau(pointReincarnation);
             System.out.println("Félicitations, vous vous êtes réincarné en bousier");
-        } else if (pointReincarnation == 5) {
+        } else if (pointReincarnation == 5 && pointReincarnation > this.niveau) {
             setNiveau(pointReincarnation);
             System.out.println("Félicitations, vous vous êtes réincarné en serpent");
-        } else if (pointReincarnation == 6) {
+        } else if (pointReincarnation == 6 && pointReincarnation > this.niveau) {
             setNiveau(pointReincarnation);
             System.out.println("Félicitations, vous vous êtes réincarné en loup");
-        } else if (pointReincarnation == 7) {
+        } else if (pointReincarnation == 7 && pointReincarnation > this.niveau) {
             setNiveau(pointReincarnation);
             System.out.println("Félicitations, vous vous êtes réincarné en singe");
         }else {
@@ -139,12 +152,18 @@ public class Player {
         for (Cards card : vieFuture){
             main.add(card);
         }
-        while ((main.size() + pile.size()) < 6){
-            //pile.add(PlateauDeJeu.source(0));
-            pile.addAll(PlateauDeJeu.source.subList(0, 1));
-            PlateauDeJeu.source.subList(0, 1).clear();
-        }
+        int cardsToAdd = 6 - (main.size() + pile.size());
+        pile.addAll(PlateauDeJeu.source.subList(0, cardsToAdd));
+        PlateauDeJeu.source.subList(0, cardsToAdd).clear();
     }
+    public boolean isMainVide(){
+        return main.isEmpty();
+    }
+    public boolean isPileVide(){
+        return pile.isEmpty();
+    }
+
+
 
 
 }

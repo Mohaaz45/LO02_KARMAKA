@@ -9,7 +9,7 @@ import java.util.List;
 public class PlateauDeJeu {
     public List<Cards> source = new ArrayList<>();
     private List<Cards> fosse = new ArrayList<>();
-    private int anneauxKarmiques;
+
 
     public PlateauDeJeu(){
         for (Cards card : Cards.values()){
@@ -18,7 +18,6 @@ public class PlateauDeJeu {
             }
         }
         Collections.shuffle(this.source);
-        this.anneauxKarmiques = 12;
     }
     public List<Cards> getSource(){
         return this.source;
@@ -30,12 +29,7 @@ public class PlateauDeJeu {
     public void defausserCarte(Cards card){
         this.fosse.add(card);
     }
-   /*public void piocherCarte(){
-        this.source.remove(0);*/
-    }
-    public void prendreAnneaux(int nbAnneau){
-        this.anneauxKarmiques -= nbAnneau;
-    }
+
     public void melangerSource(){
         Collections.shuffle(this.source);
     }
