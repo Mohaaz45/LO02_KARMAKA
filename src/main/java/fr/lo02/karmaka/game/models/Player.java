@@ -102,6 +102,7 @@ public class Player {
 
     public void poserCarte(Cards card, List<Cards> pileDeCarte){
         pileDeCarte.add(card);
+        main.remove(card);
     }
 
     public void jouerFutur(Cards card){
