@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameManager {
-    private PlateauDeJeu plateauDeJeu;
-    private Player joueur1;
-    private Player joueur2;
-    private Player joueurActuel;
-    private int nbJoueur;
+    public PlateauDeJeu plateauDeJeu;
+    public Player joueur1;
+    public Player joueur2;
+    public Player joueurActuel;
+    public int nbJoueur;
     public GameManager(int nbJoueur) {
         //Arrays.stream(Cards.values()).forEach(cards -> );
         this.nbJoueur = nbJoueur;
@@ -113,7 +113,7 @@ public void debutPartie(){
             }
         }
     }
-}
+
 
     private void passerTour() {
         // Ajoutez la logique pour passer au tour suivant
@@ -137,7 +137,7 @@ public void debutPartie(){
                 if (carte.name().equals(saisie)) {
                     // Le nom saisi correspond à une carte valide
                     carteValide = true;
-                    utilCarte(carte, scan);//besoin d'aide ici pour faire appel à utilCarte
+                    utilCarte(carte, saisieJoueur);//besoin d'aide ici pour faire appel à utilCarte
 
 
 
@@ -161,7 +161,7 @@ public void debutPartie(){
         choix = scan.nextInt();
         switch (choix){
             case 1 :
-                joueurActuel.jouerPouvoir(card);
+                joueurActuel.jouerPouvoir(this, joueurActuel,getRival(), card );
                 break;
             case 2 :
                 joueurActuel.jouerPoints(card);
@@ -173,5 +173,40 @@ public void debutPartie(){
 
     }
 
+    public Player getRival(){
+        return joueurActuel == joueur1 ? joueur2 : joueur1;
+    }
+    public PlateauDeJeu getPlateauDeJeu() {
+        return plateauDeJeu;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+    public void jouerPartie(Scanner scan) {
+        while (true) {
+            System.out.println("Tour de " + joueurActuel.getNom() + " !");
+            tourCaracteristique(scan);
+
+            // Vérifier si le joueur a atteint la transcendance
+            if (joueurActuel.getNiveau() >= 8) {
+                System.out.println(joueurActuel.getNom() + " a atteint la transcendance ! Félicitations !");
+                break;  // Sortir de la boucle si le joueur a atteint la transcendance
+            }
+
+            // Changer de joueur pour le prochain tour
+            passerTour();
+        }
+    }
+
+    // ... (votre code existant)
 }
