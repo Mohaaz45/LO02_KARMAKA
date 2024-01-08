@@ -22,26 +22,26 @@ public class GameManager {
     public void initPartie(){
         Scanner scanner = new Scanner(System.in);
         if (nbJoueur == 2){
-        // Saisie du nom du joueur 1
-        System.out.print("Saisissez le nom du joueur 1 : ");
-        String nomJoueur1 = scanner.nextLine();
-        joueur1 = new Player(nomJoueur1);
+            // Saisie du nom du joueur 1
+            System.out.print("Saisissez le nom du joueur 1 : ");
+            String nomJoueur1 = scanner.nextLine();
+            joueur1 = new Player(nomJoueur1);
 
-        // Saisie du nom du joueur 2
-        System.out.print("Saisissez le nom du joueur 2 : ");
-        String nomJoueur2 = scanner.nextLine();
-        joueur2 = new Player(nomJoueur2);
+            // Saisie du nom du joueur 2
+            System.out.print("Saisissez le nom du joueur 2 : ");
+            String nomJoueur2 = scanner.nextLine();
+            joueur2 = new Player(nomJoueur2);
 
-        // Décision du joueur qui commencera son tour en premier
-        System.out.print("Le joueur 1 ou le joueur 2 commencera son tour en premier ? (1/2) : ");
-        int choixPremierJoueur = scanner.nextInt();
+            // Décision du joueur qui commencera son tour en premier
+            System.out.print("Le joueur 1 ou le joueur 2 commencera son tour en premier ? (1/2) : ");
+            int choixPremierJoueur = scanner.nextInt();
 
-        if (choixPremierJoueur == 1) {
-            joueurActuel = joueur1;
-        } else {
-            joueurActuel = joueur2;
-        }
-    } else if (nbJoueur == 1) {
+            if (choixPremierJoueur == 1) {
+                joueurActuel = joueur1;
+            } else {
+                joueurActuel = joueur2;
+            }
+        } else if (nbJoueur == 1) {
             // Saisie du nom du joueur
             System.out.print("Saisissez le nom du joueur 1 : ");
             String nomJoueur1 = scanner.nextLine();
@@ -49,29 +49,29 @@ public class GameManager {
             // SUITE A TERMINER
         }
     }
-public void MenuDebut(){
-    Scanner scanner = new Scanner(System.in);
+    public void MenuDebut(){
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Commencer la partie : 1");
-    System.out.println("Quitter le jeu : 2");
+        System.out.println("Commencer la partie : 1");
+        System.out.println("Quitter le jeu : 2");
 
-    int choixMenu = scanner.nextInt();
+        int choixMenu = scanner.nextInt();
 
-    switch (choixMenu) {
-        case 1:
-            // Commencer la partie
-            debutPartie();
-            break;
-        case 2:
-            // Quitter le jeu
-            System.out.println("Merci d'avoir joué. Au revoir !");
-            System.exit(0);
-            break;
-        default:
-            System.out.println("Choix invalide. Veuillez choisir une option valide.");
+        switch (choixMenu) {
+            case 1:
+                // Commencer la partie
+                debutPartie();
+                break;
+            case 2:
+                // Quitter le jeu
+                System.out.println("Merci d'avoir joué. Au revoir !");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Choix invalide. Veuillez choisir une option valide.");
+        }
     }
-}
-public void debutPartie(){
+    public void debutPartie(){
         PlateauDeJeu pdj = new PlateauDeJeu();
         if (nbJoueur == 2){
             joueur1.distribuerCarte();
@@ -81,7 +81,7 @@ public void debutPartie(){
             //à compléter
         }
 
-}
+    }
 
     public void tourCaracteristique(Scanner saisieJoueur) {
         boolean continuerTour = true;
@@ -183,6 +183,24 @@ public void debutPartie(){
 
 
 
+    public void verifEtReincarnation(Scanner scanner) {
+        if (joueurActuel.isMainVide() && joueurActuel.isPileVide()) {
+            System.out.println("Votre main est vide. Vous pouvez effectuer votre évolution karmique.");
+
+            // Demander au joueur de choisir une couleur
+            System.out.print("Choisissez une couleur pour votre évolution karmique (Rouge/Vert/Bleu) : ");
+            String couleurChoisie = scanner.nextLine();
+
+            // Demander au joueur de choisir le nombre d'anneaux
+            System.out.print("Choisissez le nombre d'anneaux pour votre évolution karmique : ");
+            int nbAnneauxChoisis = scanner.nextInt();
+            scanner.nextLine();  // Pour consommer la nouvelle ligne restante après la saisie de l'entier
+
+            // Appeler la méthode d'évolution karmique avec la couleur et le nombre d'anneaux choisis
+            joueurActuel.evolutionKarmique(Color.valueOf(couleurChoisie.toUpperCase()), nbAnneauxChoisis);
+            joueurActuel.seReincarner(getPlateauDeJeu());
+        }
+    }
 
 
 
@@ -195,7 +213,9 @@ public void debutPartie(){
     public void jouerPartie(Scanner scan) {
         while (true) {
             System.out.println("Tour de " + joueurActuel.getNom() + " !");
+            verifEtReincarnation(scan);
             tourCaracteristique(scan);
+
 
             // Vérifier si le joueur a atteint la transcendance
             if (joueurActuel.getNiveau() >= 8) {
