@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlateauDeJeu {
-    public List<Cards> source = new ArrayList<>();
-    private List<Cards> fosse = new ArrayList<>();
+    public static List<Cards> source = new ArrayList<>();
+    public static  List<Cards> fosse = new ArrayList<>();
 
 
     public PlateauDeJeu(){
