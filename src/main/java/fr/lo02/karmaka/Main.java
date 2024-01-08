@@ -22,6 +22,7 @@ public class Main {
             partieVsJoueur.tourCaracteristique();
         }else {
             System.out.println("Erreur saisie");
+            test
         }
 
     }
