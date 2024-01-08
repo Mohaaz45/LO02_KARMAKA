@@ -19,10 +19,10 @@ public class Main {
             GameManager partieVsJoueur = new GameManager(2);
             partieVsJoueur.initPartie();
             partieVsJoueur.MenuDebut();
-            partieVsJoueur.tourCaracteristique();
+            partieVsJoueur.jouerPartie();
         }else {
             System.out.println("Erreur saisie");
-            test
+            
         }
 
     }
