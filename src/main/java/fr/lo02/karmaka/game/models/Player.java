@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    private String nom;
-    private int niveau;
-    private List<Cards> main;
-    private List<Cards> pile;
-    private List<Cards> vieFuture;
-    private List<Cards> oeuvres;
-    private int anneauxJoueur;
+    public String nom;
+    public int niveau;
+    public List<Cards> main;
+    public List<Cards> pile;
+    public List<Cards> vieFuture;
+    public List<Cards> oeuvres;
+    public int anneauxJoueur;
 
     public String getNom() {
         return this.nom;
@@ -112,8 +112,8 @@ public class Player {
         //this.oeuvres.add(card);
         poserCarte(card, oeuvres);
     }
-    public void jouerPouvoir(Cards card){
-        card.onPlayed();
+    public void jouerPouvoir(GameManager gameManager, Player player, Player rival , Cards card ){
+        card.onPlayed(gameManager, player, rival);
     }
 
 
@@ -145,9 +145,9 @@ public class Player {
             System.out.println("Félicitations, vous avez atteint la transcendance");
         }
     }
-    public void seRéincarner(){
+    public void seReincarner(PlateauDeJeu plateauDeJeu){
         for (Cards card : oeuvres){
-            PlateauDeJeu.defausserCarte(card);
+            plateauDeJeu.defausserCarte(card);
         }
         for (Cards card : vieFuture){
             main.add(card);
